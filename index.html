@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Orçamento Pessoal</title>
+</head>
+<body>
+    <header>
+        <h1>Calculadora de Orçamento Pessoal</h1>
+        <p>Muitas pessoas não possuem controle dos seus gastos e ganhos mensais, o que as levam ao endividamento e dificuldades financeiras.</p>
+        <p>Com nossa ferramenta será possível ter um controle maior, ajudamos você a organizar suas finanças com praticidade, permitindo registrar receitas, despesas e visualizar seu saldo mensal com análises detalhadas.</p>
+    </header>
+    <main>
+        <section class="Introdução">
+            <h2>Como funciona</h2>
+            <div class="Funcionalidades">
+                <div class="Funcionalidade 1">
+                    <h3>Calculadora Inteligente</h3>
+                    <p>Com uma interface intuitiva para registrar receitas e despesas com categorização automáticas</p>
+                </div>
+                <div class="Funcionalidade 2">
+                    <h3>Análise Visual</h3>
+                    <p>Gráficos interativos para visualizar tendências e padrões de gastos ao longo do tempo.</p>
+                </div>
+                <div class="Funcionalidade 3">
+                    <h3>Dicas Personalizadas</h3>
+                    <p>Receba orientações financeiras baseadas no seu perfil e situação atual.</p>
+                </div>
+            </div>
+        </section>
+        <section class="Calculadora">
+            <h2>Controle seu Orçamento</h2>
+            <p>Preencha os campos abaixo com suas receitas e despesas para visualizar seu saldo mensal e analisar tendências financeiras ao longo do tempo.</p>
+            
+            <div class="period">
+                <h3>Período do Orçamento</h3>
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="month">Mês</label>
+                        <select id="month">
+                            <option value="">Selecione o mês</option>
+                            <option value="1">Janeiro</option>
+                            <option value="2">Fevereiro</option>
+                            <option value="3">Março</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Maio</option>
+                            <option value="6">Junho</option>
+                            <option value="7">Julho</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Setembro</option>
+                            <option value="10">Outubro</option>
+                            <option value="11">Novembro</option>
+                            <option value="12">Dezembro</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="year">Ano</label>
+                        <select id="year">
+                            <option value="">Selecione o ano</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="budget-container">
+                <div class="income-section">
+                    <h3>Suas Receitas</h3>
+                    <p>Adicione todas as suas fontes de renda mensal</p>
+                    
+                    <div class="entry-form">
+                        <div class="input-group">
+                            <label for="income-description">Descrição</label>
+                            <input type="text" id="income-description" placeholder="Ex: Salário, Freelance, Aluguel...">
+                        </div>
+                        <div class="input-group">
+                            <label for="income-value">Valor (R$)</label>
+                            <input type="number" id="income-value" min="0" step="0.01" placeholder="0,00">
+                        </div>
+                        <button id="add-income">Adicionar Receita</button>
+                    </div>
+                    
+                    <div class="entries-list">
+                        <table id="income-table">
+                            <thead>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <th>Valor (R$)</th>
+                                    <th>Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="expenses-section">
+                    <div class="fixed-expenses">
+                        <h3>Despesas Fixas</h3>
+                        
+                        <div class="entry-form">
+                            <div class="input-group">
+                                <label for="fixed-description">Descrição</label>
+                                <input type="text" id="fixed-description" placeholder="Ex: Aluguel, Internet, Academia...">
+                            </div>
+                            <div class="input-group">
+                                <label for="fixed-value">Valor (R$)</label>
+                                <input type="number" id="fixed-value" min="0" step="0.01" placeholder="0,00">
+                            </div>
+                            <button id="add-fixed">Adicionar Despesa Fixa</button>
+                        </div>
+                        
+                        <div class="entries-list">
+                            <table id="fixed-table">
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Valor (R$)</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="variable-expenses">
+                        <h3>Despesas Variáveis</h3>
+                        
+                        <div class="entry-form">
+                            <div class="input-group">
+                                <label for="variable-description">Descrição</label>
+                                <input type="text" id="variable-description" placeholder="Ex: Alimentação, Lazer, Transporte...">
+                            </div>
+                            <div class="input-group">
+                                <label for="variable-value">Valor (R$)</label>
+                                <input type="number" id="variable-value" min="0" step="0.01" placeholder="0,00">
+                            </div>
+                            <button id="add-variable">Adicionar Despesa Variável</button>
+                        </div>
+                        
+                        <div class="entries-list">
+                            <table id="variable-table">
+                                <thead>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <th>Valor (R$)</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="summary">
+                <h3>Resumo Rápido</h3>
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <span>Receitas:</span>
+                        <span id="total-income">R$ 0,00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Despesas Fixas:</span>
+                        <span id="total-fixed">R$ 0,00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Despesas Variáveis:</span>
+                        <span id="total-variable">R$ 0,00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Total Despesas:</span>
+                        <span id="total-expenses">R$ 0,00</span>
+                    </div>
+                    <div class="summary-item highlight">
+                        <span>Saldo:</span>
+                        <span id="balance">R$ 0,00</span>
+                    </div>
+                </div>
+                <button id="calculate-budget">Calcular Orçamento</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Calculadora de Orçamento Pessoal - Organize suas finanças de forma simples e eficiente.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
