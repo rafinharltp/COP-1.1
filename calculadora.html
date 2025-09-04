@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Orçamento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Calculadora de Orçamento</h1>
+
+        <div class="Periodo">
+            <h3>Período do Orçamento</h3>
+            <div class="inputs">
+                <div class="input-group">
+                    <label for="month">Mês</label>
+                    <select id="month">
+                        <option value="">Selecione o mês</option>
+                        <option value="1">Janeiro</option>
+                        <option value="2">Fevereiro</option>
+                        <option value="3">Março</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Maio</option>
+                        <option value="6">Junho</option>
+                        <option value="7">Julho</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Setembro</option>
+                        <option value="10">Outubro</option>
+                        <option value="11">Novembro</option>
+                        <option value="12">Dezembro</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="year">Ano</label>
+                    <select id="year">
+                        <option value="">Selecione o ano</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="paginas">
+            <button class="tab-btn active" data-tab="receitas">Receitas</button>
+            <button class="tab-btn" data-tab="fixas">Despesas Fixas</button>
+            <button class="tab-btn" data-tab="variaveis">Despesas Variáveis</button>
+        </div>
+
+        <div id="receitas" class="tab-content active">
+            <h2>Receitas</h2>
+            <input type="text" id="descricao-receita" placeholder="Descrição">
+            <input type="number" id="valor-receita" placeholder="Valor">
+            <button onclick="adicionarReceita()">Adicionar Receita</button>
+            <ul id="lista-receitas"></ul>
+        </div>
+
+        <div id="fixas" class="tab-content">
+            <h2>Despesas Fixas</h2>
+            <input type="text" id="descricao-fixa" placeholder="Descrição">
+            <input type="number" id="valor-fixa" placeholder="Valor">
+            <button onclick="adicionarFixa()">Adicionar Despesa Fixa</button>
+            <ul id="lista-fixas"></ul>
+        </div>
+
+        <div id="variaveis" class="tab-content">
+            <h2>Despesas Variáveis</h2>
+            <input type="text" id="descricao-variavel" placeholder="Descrição">
+            <input type="number" id="valor-variavel" placeholder="Valor">
+            <button onclick="adicionarVariavel()">Adicionar Despesa Variável</button>
+            <ul id="lista-variaveis"></ul>
+        </div>
+
+        <h2>Resumo</h2>
+        <p>Total de Receitas: R$ <span id="total-receitas">0</span></p>
+        <p>Total de Despesas Fixas: R$ <span id="total-fixas">0</span></p>
+        <p>Total de Despesas Variáveis: R$ <span id="total-variaveis">0</span></p>
+        <p><strong>Saldo: R$ <span id="saldo">0</span></strong></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
