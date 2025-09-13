@@ -213,6 +213,29 @@ button:hover {
 }
 
 /* ===== CALCULADORA ===== */
+
+.btn-voltar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-voltar:hover {
+  background-color: #1e40af;
+  transform: scale(1.1);
+}
+
 .container {
   max-width: 900px;
   margin: 2rem auto;
@@ -405,6 +428,10 @@ footer {
   text-align: center;
   padding: 2rem;
   margin-top: 4rem;
+}
+
+.btn-portifolio {
+  color: var(--primary-color);
 }
 
 /* ===== RESPONSIVIDADE ===== */
