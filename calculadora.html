@@ -1,3 +1,14 @@
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  const supabase = window.supabase.createClient("https://zfjxavpoipamvboobkzw.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmanhhdnBvaXBhbXZib29ia3p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMTY2OTEsImV4cCI6MjA3MjY5MjY5MX0.rRu_lQyH7lKq9ukgYS9YX9pedWVOGjIEPUlLCTyQL_M");
+
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (!session) {
+      window.location.href = "TelaLogin.html";
+    }
+  });
+</script>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login e Cadastro - Finanças</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    /* ===== VARIÁVEIS E CORES ===== */
+    :root {
+      --primary-color: #2563eb;
+      --background-color: #f0f5ff;
+      --text-white: #ffffff;
+      --text-dark: #1e293b;
+      --shadow-light: rgba(37, 99, 235, 0.1);
+      --shadow-medium: rgba(37, 99, 235, 0.2);
+      --gradient-primary: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    }
+
+    /* ===== RESET ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--background-color);
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .auth-container {
+      background: var(--text-white);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px var(--shadow-light);
+      max-width: 450px;
+      width: 100%;
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      background: var(--background-color);
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--text-dark);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .tab.active {
+      background: var(--primary-color);
+      color: var(--text-white);
+      box-shadow: 0 5px 15px var(--shadow-light);
+    }
+
+    .content { display: none; }
+    .content.active { display: block; }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.8rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    button {
+      background: var(--gradient-primary);
+      color: var(--text-white);
+      border: none;
+      padding: 0.8rem;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px var(--shadow-light);
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px var(--shadow-medium);
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 1rem;
+      min-height: 24px;
+      font-weight: 600;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 500px) {
+      .auth-container { padding: 1.5rem; }
+      .tab { font-size: 0.9rem; padding: 0.8rem; }
+      button { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-container">
+    <div class="tabs">
+      <div id="tab-login" class="tab active" onclick="showTab('login')">Login</div>
+      <div id="tab-signup" class="tab" onclick="showTab('signup')">Cadastro</div>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="login" class="content active">
+      <h2>Entrar na sua conta</h2>
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-password" placeholder="Senha" />
+      <button onclick="login()">Entrar</button>
+
+      <!-- Botão Google -->
+      <button onclick="loginWithGoogle()" style="
+        background: white;
+        color: #1e293b;
+        border: 2px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" height="20" alt="Google logo">
+        Entrar com Google
+      </button>
+    </div>
+
+    <!-- CADASTRO -->
+    <div id="signup" class="content">
+      <h2>Criar uma nova conta</h2>
+      <input type="email" id="signup-email" placeholder="Email" />
+      <input type="password" id="signup-password" placeholder="Senha" />
+      <button onclick="signup()">Cadastrar</button>
+    </div>
+
+    <p id="status"></p>
+  </div>
+
+  <script>
+    // 🔑 CONFIGURAÇÃO DO SUPABASE
+    const SUPABASE_URL = 'https://zfjxavpoipamvboobkzw.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmanhhdnBvaXBhbXZib29ia3p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMTY2OTEsImV4cCI6MjA3MjY5MjY5MX0.rRu_lQyH7lKq9ukgYS9YX9pedWVOGjIEPUlLCTyQL_M';
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // 🧭 Alternar abas
+    function showTab(tab) {
+      document.getElementById('login').classList.toggle('active', tab === 'login');
+      document.getElementById('signup').classList.toggle('active', tab === 'signup');
+      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+      document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+      document.getElementById('status').textContent = '';
+    }
+
+    // 🔐 Login com e-mail/senha
+    async function login() {
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+      const status = document.getElementById('status');
+
+      if (!email || !password) {
+        status.textContent = 'Preencha todos os campos.';
+        status.style.color = 'red';
+        return;
+      }
+
+      status.textContent = 'Conectando...';
+      status.style.color = 'black';
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        status.textContent = 'Erro: ' + error.message;
+        status.style.color = 'red';
+      } else {
+        status.textContent = 'Login realizado com sucesso! Redirecionando...';
+        status.style.color = 'green';
+        setTimeout(() => window.location.href = 'index.html', 1000);
+      }
+    }
+
+    // 🧾 Cadastro
+    async function signup() {
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value.trim();
+      const status = document.getElementById('status');
+
+      if (!email || !password) {
+        status.textContent = 'Preencha todos os campos.';
+        status.style.color = 'red';
+        return;
+      }
+
+      status.textContent = 'Criando conta...';
+      status.style.color = 'black';
+
+      const { data, error } = await supabaseClient.auth.signUp({ email, password });
+
+      if (error) {
+        status.textContent = 'Erro: ' + error.message;
+        status.style.color = 'red';
+      } else {
+        status.textContent = 'Conta criada com sucesso! Verifique seu e-mail.';
+        status.style.color = 'green';
+      }
+    }
+
+    // 🔵 Login com Google
+    async function loginWithGoogle() {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: 'index.html'
+        }
+      });
+
+      if (error) {
+        alert("Erro ao entrar com Google: " + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

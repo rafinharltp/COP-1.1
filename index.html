@@ -1,51 +1,85 @@
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+  // --- Configuração do Supabase ---
+  const SUPABASE_URL = "https://zfjxavpoipamvboobkzw.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmanhhdnBvaXBhbXZib29ia3p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMTY2OTEsImV4cCI6MjA3MjY5MjY5MX0.rRu_lQyH7lKq9ukgYS9YX9pedWVOGjIEPUlLCTyQL_M";
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // --- Verifica se há sessão ---
+  supabase.auth.getSession().then(({ data: { session } }) => {
+    if (!session) {
+      window.location.href = "TelaLogin.html";
+    }
+  });
+
+  // --- Função para logout ---
+  async function logout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      alert("Erro ao sair: " + error.message);
+    } else {
+      alert("Você saiu com sucesso!");
+      window.location.href = "TelaLogin.html";
+    }
+  }
+</script>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Orçamento Pessoal</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Orçamento Pessoal</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header>
-        <h1>Calculadora de Orçamento Pessoal</h1>
-        <p>Muitas pessoas não possuem controle dos seus gastos e ganhos mensais, o que as levam ao endividamento e
-            dificuldades financeiras.</p>
-        <p>Com nossa ferramenta será possível ter um controle maior, ajudamos você a organizar suas finanças com
-            praticidade, permitindo registrar receitas, despesas e visualizar seu saldo mensal com análises detalhadas.
-        </p>
-    </header>
-    <main>
-        <section class="Introdução">
-            <h2>Como funciona</h2>
-            <div class="Funcionalidades">
-                <div class="Funcionalidade 1">
-                    <h3>Calculadora Inteligente</h3>
-                    <p>Com uma interface intuitiva para registrar receitas e despesas com categorização automáticas</p>
-                </div>
-                <div class="Funcionalidade 2">
-                    <h3>Análise Visual</h3>
-                    <p>Gráficos interativos para visualizar tendências e padrões de gastos ao longo do tempo.</p>
-                </div>
-                <div class="Funcionalidade 3">
-                    <h3>Dicas Personalizadas</h3>
-                    <p>Receba orientações financeiras baseadas no seu perfil e situação atual.</p>
-                </div>
-            </div>
-        </section>
-        <section class="Botão de começo">
-            <a href="calculadora.html">
-                <button>Começar agora</button>
-            </a>
-        </section>
-    </main>
-    <footer>
-        <p>Calculadora de Orçamento Pessoal - Organize suas finanças de forma simples e eficiente.</p>
-        <p>Email de Contato: suport.cop@gmail.com</p>
-        <p>Acesse também nosso portfólio do projeto <a href="https://pedroant06.github.io/Portfoli-ProjetodeExtencao/" class="btn-portifolio">Porfólio</a></p>
-    </footer>
+  <header>
+    <h1>Calculadora de Orçamento Pessoal</h1>
+    <p>Muitas pessoas não possuem controle dos seus gastos e ganhos mensais, o que as levam ao endividamento e
+      dificuldades financeiras.</p>
+    <p>Com nossa ferramenta será possível ter um controle maior, ajudamos você a organizar suas finanças com
+      praticidade, permitindo registrar receitas, despesas e visualizar seu saldo mensal com análises detalhadas.
+    </p>
+
+    <!-- Botão de Logout -->
+    <button onclick="logout()" style=" background-color: #ff4b4b; color: white; padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer;">
+      Sair da Conta
+    </button>
+  </header>
+
+  <main>
+    <section class="Introdução">
+      <h2>Como funciona</h2>
+      <div class="Funcionalidades">
+        <div class="Funcionalidade 1">
+          <h3>Calculadora Inteligente</h3>
+          <p>Com uma interface intuitiva para registrar receitas e despesas com categorização automáticas</p>
+        </div>
+        <div class="Funcionalidade 2">
+          <h3>Análise Visual</h3>
+          <p>Gráficos interativos para visualizar tendências e padrões de gastos ao longo do tempo.</p>
+        </div>
+        <div class="Funcionalidade 3">
+          <h3>Dicas Personalizadas</h3>
+          <p>Receba orientações financeiras baseadas no seu perfil e situação atual.</p>
+        </div>
+      </div>
+    </section>
+    <section class="Botão de começo">
+      <a href="calculadora.html">
+        <button>Começar agora</button>
+      </a>
+    </section>
+  </main>
+  <footer>
+    <p>Calculadora de Orçamento Pessoal - Organize suas finanças de forma simples e eficiente.</p>
+    <p>Email de Contato: suport.cop@gmail.com</p>
+    <p>Acesse também nosso portfólio do projeto <a href="https://pedroant06.github.io/Portfoli-ProjetodeExtencao/"
+        class="btn-portifolio">Porfólio</a></p>
+  </footer>
 </body>
 
 </html>
