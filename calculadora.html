@@ -1,106 +1,137 @@
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script>
-  const supabase = window.supabase.createClient("https://zfjxavpoipamvboobkzw.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmanhhdnBvaXBhbXZib29ia3p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMTY2OTEsImV4cCI6MjA3MjY5MjY5MX0.rRu_lQyH7lKq9ukgYS9YX9pedWVOGjIEPUlLCTyQL_M");
-
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    if (!session) {
-      window.location.href = "TelaLogin.html";
-    }
-  });
-</script>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Orçamento</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Orçamento</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Calculadora de Orçamento</h1>
+  <div class="container">
+    <h1>Calculadora de Orçamento</h1>
 
-        <div class="botão voltar">
-            <a href="index.html" class="btn-voltar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                    class="bi bi-arrow-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 
+    <!-- Botão de Voltar -->
+    <div class="botão voltar">
+      <a href="index.html" class="btn-voltar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+          class="bi bi-arrow-left" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 
              4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 
              8.5H14.5A.5.5 0 0 0 15 8" />
-                </svg>
-            </a>
-        </div>
-
-        <div class="Periodo">
-            <h3>Período do Orçamento</h3>
-            <div class="inputs">
-                <div class="input-group">
-                    <label for="month">Mês</label>
-                    <select id="month">
-                        <option value="">Selecione o mês</option>
-                        <option value="1">Janeiro</option>
-                        <option value="2">Fevereiro</option>
-                        <option value="3">Março</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Maio</option>
-                        <option value="6">Junho</option>
-                        <option value="7">Julho</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Setembro</option>
-                        <option value="10">Outubro</option>
-                        <option value="11">Novembro</option>
-                        <option value="12">Dezembro</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="year">Ano</label>
-                    <select id="year">
-                        <option value="">Selecione o ano</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="paginas">
-            <button class="tab-btn active" data-tab="receitas">Receitas</button>
-            <button class="tab-btn" data-tab="fixas">Despesas Fixas</button>
-            <button class="tab-btn" data-tab="variaveis">Despesas Variáveis</button>
-        </div>
-
-        <div id="receitas" class="tab-content active">
-            <h2>Receitas</h2>
-            <input type="text" id="descricao-receita" placeholder="Descrição">
-            <input type="number" id="valor-receita" placeholder="Valor">
-            <button onclick="adicionarReceita()">Adicionar Receita</button>
-            <ul id="lista-receitas"></ul>
-        </div>
-
-        <div id="fixas" class="tab-content">
-            <h2>Despesas Fixas</h2>
-            <input type="text" id="descricao-fixa" placeholder="Descrição">
-            <input type="number" id="valor-fixa" placeholder="Valor">
-            <button onclick="adicionarFixa()">Adicionar Despesa Fixa</button>
-            <ul id="lista-fixas"></ul>
-        </div>
-
-        <div id="variaveis" class="tab-content">
-            <h2>Despesas Variáveis</h2>
-            <input type="text" id="descricao-variavel" placeholder="Descrição">
-            <input type="number" id="valor-variavel" placeholder="Valor">
-            <button onclick="adicionarVariavel()">Adicionar Despesa Variável</button>
-            <ul id="lista-variaveis"></ul>
-        </div>
-
-        <h2>Resumo</h2>
-        <p>Total de Receitas: R$ <span id="total-receitas">0</span></p>
-        <p>Total de Despesas Fixas: R$ <span id="total-fixas">0</span></p>
-        <p>Total de Despesas Variáveis: R$ <span id="total-variaveis">0</span></p>
-        <p><strong>Saldo: R$ <span id="saldo">0</span></strong></p>
+        </svg>
+      </a>
     </div>
-    <script src="script.js"></script>
+
+    <div class="Periodo">
+      <h3>Período do Orçamento</h3>
+      <div class="inputs">
+        <div class="input-group">
+          <label for="month">Mês</label>
+          <select id="month">
+            <option value="">Selecione o mês</option>
+            <option value="1">Janeiro</option>
+            <option value="2">Fevereiro</option>
+            <option value="3">Março</option>
+            <option value="4">Abril</option>
+            <option value="5">Maio</option>
+            <option value="6">Junho</option>
+            <option value="7">Julho</option>
+            <option value="8">Agosto</option>
+            <option value="9">Setembro</option>
+            <option value="10">Outubro</option>
+            <option value="11">Novembro</option>
+            <option value="12">Dezembro</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="year">Ano</label>
+          <select id="year">
+            <option value="">Selecione o ano</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="paginas">
+      <button class="tab-btn active" data-tab="receitas">Receitas</button>
+      <button class="tab-btn" data-tab="fixas">Despesas Fixas</button>
+      <button class="tab-btn" data-tab="variaveis">Despesas Variáveis</button>
+    </div>
+
+    <div id="receitas" class="tab-content active">
+      <h2>Receitas</h2>
+      <input type="text" id="descricao-receita" placeholder="Descrição">
+      <input type="number" id="valor-receita" placeholder="Valor">
+      <button onclick="adicionarReceita()">Adicionar Receita</button>
+      <ul id="lista-receitas"></ul>
+    </div>
+
+    <div id="fixas" class="tab-content">
+      <h2>Despesas Fixas</h2>
+      <input type="text" id="descricao-fixa" placeholder="Descrição">
+      <input type="number" id="valor-fixa" placeholder="Valor">
+      <button onclick="adicionarFixa()">Adicionar Despesa Fixa</button>
+      <ul id="lista-fixas"></ul>
+    </div>
+
+    <div id="variaveis" class="tab-content">
+      <h2>Despesas Variáveis</h2>
+      <input type="text" id="descricao-variavel" placeholder="Descrição">
+      <input type="number" id="valor-variavel" placeholder="Valor">
+      <button onclick="adicionarVariavel()">Adicionar Despesa Variável</button>
+      <ul id="lista-variaveis"></ul>
+    </div>
+
+    <h2>Resumo</h2>
+    <p>Total de Receitas: R$ <span id="total-receitas">0</span></p>
+    <p>Total de Despesas Fixas: R$ <span id="total-fixas">0</span></p>
+    <p>Total de Despesas Variáveis: R$ <span id="total-variaveis">0</span></p>
+    <p><strong>Saldo: R$ <span id="saldo">0</span></strong></p>
+
+    <!-- Botão de Logout -->
+    <button onclick="logout()" 
+      style="margin-top: 15px; background-color: #ff4b4b; color: white; padding: 10px 16px; border: none; border-radius: 8px; cursor: pointer;">
+      Sair da Conta
+    </button>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- 🔐 Supabase Auth Protection -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://zfjxavpoipamvboobkzw.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmanhhdnBvaXBhbXZib29ia3p3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMTY2OTEsImV4cCI6MjA3MjY5MjY5MX0.rRu_lQyH7lKq9ukgYS9YX9pedWVOGjIEPUlLCTyQL_M";
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // 🔎 Verifica se o usuário está logado
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        window.location.href = "TelaLogin.html";
+      }
+    })();
+
+    // 🚪 Logout
+    async function logout() {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        alert("Erro ao sair: " + error.message);
+      } else {
+        alert("Você saiu com sucesso!");
+        window.location.href = "TelaLogin.html";
+      }
+    }
+
+    // (Opcional) Mostrar usuário logado no console
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) console.log("Usuário logado:", user.email);
+    });
+  </script>
 </body>
 
 </html>
