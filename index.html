@@ -9,7 +9,7 @@
   // --- Verifica se há sessão ---
   supabase.auth.getSession().then(({ data: { session } }) => {
     if (!session) {
-      window.location.href = "TelaLogin.html";
+      window.location.href = "https://rafinharltp.github.io/COP-1.1/TelaLogin.html";
     }
   });
 
@@ -20,7 +20,7 @@
       alert("Erro ao sair: " + error.message);
     } else {
       alert("Você saiu com sucesso!");
-      window.location.href = "TelaLogin.html";
+      window.location.href = "https://rafinharltp.github.io/COP-1.1/TelaLogin.html";
     }
   }
 </script>
